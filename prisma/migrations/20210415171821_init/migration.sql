@@ -1,13 +1,11 @@
 -- CreateTable
 CREATE TABLE `Filmy` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
-    `updatedAt` DATETIME(3) NOT NULL,
     `title` VARCHAR(255) NOT NULL,
-    `duration` INTEGER NOT NULL,
+    `duration` INTEGER,
     `genre` VARCHAR(191),
-    `year` INTEGER NOT NULL,
-    `director` INTEGER NOT NULL,
+    `year` VARCHAR(191),
+    `director` VARCHAR(191),
     `description` VARCHAR(191),
 
     PRIMARY KEY (`id`)
@@ -62,6 +60,8 @@ CREATE TABLE `Rezerwacje` (
     `date` DATETIME(3) NOT NULL,
     `seats` VARCHAR(191),
     `discount` INTEGER,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;

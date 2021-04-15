@@ -9,13 +9,11 @@ generator client {
 
 model Filmy {
   id          Int      @id @default(autoincrement())
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
   title       String   @db.VarChar(255)
-  duration    Int
+  duration    Int?
   genre       String?
-  year        Int
-  director    Int
+  year        String?
+  director    String?
   description String?
   seanse      Seanse[]
 }
@@ -64,6 +62,8 @@ model Rezerwacje {
   date        DateTime
   seats       String?
   discount    Int?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model Users {
