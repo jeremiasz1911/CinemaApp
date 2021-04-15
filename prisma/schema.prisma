@@ -1,0 +1,74 @@
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Filmy {
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  title       String   @db.VarChar(255)
+  duration    Int
+  genre       String?
+  year        Int
+  director    Int
+  description String?
+  seanse      Seanse[]
+}
+
+model Sale {
+  id          Int      @id @default(autoincrement())
+  seatsNumber Int
+  seanse      Seanse[]
+}
+
+model Klienci {
+  id          Int          @id @default(autoincrement())
+  name        String?
+  secondName  String?
+  description String?
+  phone       String?      @unique
+  rezerwacje  Rezerwacje[]
+}
+
+model Statusy {
+  id      Int          @id @default(autoincrement())
+  name    String?
+  statusy Rezerwacje[]
+}
+
+model Seanse {
+  id     Int          @id @default(autoincrement())
+  film   Filmy        @relation(fields: [filmId], references: [id])
+  filmId Int
+  sala   Sale         @relation(fields: [salaId], references: [id])
+  salaId Int
+  seans  Rezerwacje[]
+  date   DateTime
+  price  Int
+}
+
+model Rezerwacje {
+  id          Int      @id @default(autoincrement())
+  numberSeats Int?
+  seanse      Seanse   @relation(fields: [seansId], references: [id])
+  seansId     Int
+  klienci     Klienci  @relation(fields: [klientId], references: [id])
+  klientId    Int
+  statusy     Statusy  @relation(fields: [statusId], references: [id])
+  statusId    Int
+  date        DateTime
+  seats       String?
+  discount    Int?
+}
+
+model Users {
+  id       Int     @id @default(autoincrement())
+  login    String?
+  password String?
+  token    String?
+}
