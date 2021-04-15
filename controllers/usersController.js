@@ -5,9 +5,10 @@ const Song = 'song'
 
 module.exports = {
     async findOne(req, res, next) {
-        const song = await Song.findOne({ slug: req.params.slug });
-        if (!song) return next();
-        return res.status(200).send({ data: song });
+        const id = parseInt(req.params.id);
+        const user = await prisma.users.findUnique({where:{id}});
+        if(!user) return next();
+        return res.status(200).json({ data: user });
     },
 
     async findAll(req, res) {
@@ -16,31 +17,32 @@ module.exports = {
     },
       
     async create(req, res) {
-        console.log('rip');
         const { login, password, token } = req.body;
-        
         const user = await prisma.users.create({
             data: { login, password, token }
           });
-
           return res.status(200).json({ data: user });
     },
 
     async update(req, res, next) {
-        const song = await Song.find({ 'slug': req.params.slug });
-        if (!song) return next();
-
-        song.title = req.body.title;
-        await song.save();
-
-        return res.status(200).send({ data: song, message: `Song was updated` });
+        console.log('screen');
+        const { login, password } = req.body;
+        const id = parseInt(req.params.id);
+        const user = await prisma.users.update({
+            where: {id},
+            data: {
+              login,
+              password,
+            }
+        });
+        if(!user) return next();
+        return res.status(200).json({ data: user, message: `User was updated` });
     },
 
     async remove(req, res, next) {
-        const song = await Song.findOne({ 'slug': req.params.slug });
-        if (!song) return next();
-        await song.remove();
-
-        return res.status(200).send({ message: `Song was removed` });
+        const id = parseInt(req.params.id);
+        const deleteUser = await prisma.users.delete({where: {id}});
+        if (!deleteUser) return next();
+        return res.status(200).json({ message: `User was removed` });
     }
 };
