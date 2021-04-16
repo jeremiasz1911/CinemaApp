@@ -11,6 +11,7 @@ exports.routes = function() {
     // GET /songs
     api.get('/', catchAsync(usersController.findAll));
 
+    api.get('/login/user/', catchAsync(usersController.loginUser));
     // POST /songs
     api.post('/', catchAsync(usersController.create));
 
