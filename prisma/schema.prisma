@@ -10,17 +10,20 @@ generator client {
 model Filmy {
   id          Int      @id @default(autoincrement())
   title       String   @db.VarChar(255)
-  duration    Int?
-  genre       String?
-  year        String?
-  director    String?
-  description String?
+  duration    Int
+  genre       String
+  year        Int
+  director    String
+  description String @db.VarChar(1500)
+  picture     String
   seanse      Seanse[]
 }
 
 model Sale {
   id          Int      @id @default(autoincrement())
-  seatsNumber Int
+  name        String
+  rows        Int
+  seatsRows   String
   seanse      Seanse[]
 }
 

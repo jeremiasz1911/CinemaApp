@@ -2,11 +2,12 @@
 CREATE TABLE `Filmy` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `title` VARCHAR(255) NOT NULL,
-    `duration` INTEGER,
-    `genre` VARCHAR(191),
-    `year` VARCHAR(191),
-    `director` VARCHAR(191),
-    `description` VARCHAR(191),
+    `duration` INTEGER NOT NULL,
+    `genre` VARCHAR(191) NOT NULL,
+    `year` INTEGER NOT NULL,
+    `director` VARCHAR(191) NOT NULL,
+    `description` VARCHAR(1500) NOT NULL,
+    `picture` VARCHAR(191) NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
