@@ -15,27 +15,9 @@ CREATE TABLE `Filmy` (
 -- CreateTable
 CREATE TABLE `Sale` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `seatsNumber` INTEGER NOT NULL,
-
-    PRIMARY KEY (`id`)
-) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
--- CreateTable
-CREATE TABLE `Klienci` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `name` VARCHAR(191),
-    `secondName` VARCHAR(191),
-    `description` VARCHAR(191),
-    `phone` VARCHAR(191),
-UNIQUE INDEX `Klienci.phone_unique`(`phone`),
-
-    PRIMARY KEY (`id`)
-) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
--- CreateTable
-CREATE TABLE `Statusy` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `name` VARCHAR(191),
+    `name` VARCHAR(191) NOT NULL,
+    `rows` INTEGER NOT NULL,
+    `seatsRows` VARCHAR(8000) NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -45,8 +27,8 @@ CREATE TABLE `Seanse` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `filmId` INTEGER NOT NULL,
     `salaId` INTEGER NOT NULL,
-    `date` DATETIME(3) NOT NULL,
-    `price` INTEGER NOT NULL,
+    `dataSeansu` DATETIME(3) NOT NULL,
+    `price` DOUBLE NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -54,13 +36,11 @@ CREATE TABLE `Seanse` (
 -- CreateTable
 CREATE TABLE `Rezerwacje` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `numberSeats` INTEGER,
+    `numberSeats` VARCHAR(191),
     `seansId` INTEGER NOT NULL,
-    `klientId` INTEGER NOT NULL,
-    `statusId` INTEGER NOT NULL,
-    `date` DATETIME(3) NOT NULL,
-    `seats` VARCHAR(191),
+    `active` BOOLEAN NOT NULL DEFAULT true,
     `discount` INTEGER,
+    `guid` VARCHAR(191) NOT NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
 
@@ -85,9 +65,3 @@ ALTER TABLE `Seanse` ADD FOREIGN KEY (`salaId`) REFERENCES `Sale`(`id`) ON DELET
 
 -- AddForeignKey
 ALTER TABLE `Rezerwacje` ADD FOREIGN KEY (`seansId`) REFERENCES `Seanse`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE `Rezerwacje` ADD FOREIGN KEY (`klientId`) REFERENCES `Klienci`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE `Rezerwacje` ADD FOREIGN KEY (`statusId`) REFERENCES `Statusy`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;

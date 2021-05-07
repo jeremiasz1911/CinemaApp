@@ -5,6 +5,7 @@ datasource db {
 
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = "orderByRelation"
 }
 
 model Filmy {
@@ -23,24 +24,10 @@ model Sale {
   id          Int      @id @default(autoincrement())
   name        String
   rows        Int
-  seatsRows   String
+  seatsRows   String @db.VarChar(8000)
   seanse      Seanse[]
 }
 
-model Klienci {
-  id          Int          @id @default(autoincrement())
-  name        String?
-  secondName  String?
-  description String?
-  phone       String?      @unique
-  rezerwacje  Rezerwacje[]
-}
-
-model Statusy {
-  id      Int          @id @default(autoincrement())
-  name    String?
-  statusy Rezerwacje[]
-}
 
 model Seanse {
   id     Int          @id @default(autoincrement())
@@ -49,22 +36,18 @@ model Seanse {
   sala   Sale         @relation(fields: [salaId], references: [id])
   salaId Int
   seans  Rezerwacje[]
-  date   DateTime
-  price  Int
+  dataSeansu  DateTime 
+  price  Float
 }
 
 model Rezerwacje {
   id          Int      @id @default(autoincrement())
-  numberSeats Int?
+  numberSeats String?
   seanse      Seanse   @relation(fields: [seansId], references: [id])
   seansId     Int
-  klienci     Klienci  @relation(fields: [klientId], references: [id])
-  klientId    Int
-  statusy     Statusy  @relation(fields: [statusId], references: [id])
-  statusId    Int
-  date        DateTime
-  seats       String?
+  active      Boolean @default(true)
   discount    Int?
+  guid        String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }

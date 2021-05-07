@@ -1,8 +1,6 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
-const Song = 'song'
-
 module.exports = {
     async findOne(req, res, next) {
         console.log('login');
